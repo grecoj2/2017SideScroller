@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 
 public class GM : MonoBehaviour {
+    public int lives;
+    public int points; 
 
-	// Use this for initialization
-	void Start () {
+    public void SetLives(int newValue)
+    {
+        lives = newValue;
+    }
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
