@@ -36,7 +36,7 @@ public class Player : MonoBehaviour {
         //check for out
         if(transform.position.y < deadZone)
         {
-            Debug.Log("You're Out");
+          
         }
      
         
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour {
 
     public void GetOut()
     {
-        _GM.lives -= 1;
-        _GM.SetLives(_GM.lives - 1 );
+        _GM.SetLives(_GM.GetLives() - 1 );
+        Debug.Log("You're Out");
     }
 }
