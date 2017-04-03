@@ -9,11 +9,13 @@ public class Player : MonoBehaviour {
     public float deadZone = -3;
 
     new Rigidbody2D rigidbody;
-    GM _GM; 
-    
+    GM _GM;
+    private Vector3 startingPosition;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
+        startingPosition = transform.position;
         rigidbody = GetComponent<Rigidbody2D>();
         _GM = FindObjectOfType<GM>();
 	}
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour {
     public void GetOut()
     {
         _GM.SetLives(_GM.GetLives() - 1 );
+        transform.position = startingPosition;
         Debug.Log("You're Out");
     }
 }
