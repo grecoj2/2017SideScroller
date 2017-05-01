@@ -11,6 +11,7 @@ public class FlyingBooster : MonoBehaviour {
 	 void OnCollisionEnte2D(Collision2D coll)
     {
         player = coll.gameObject.GetComponent<Player>();
+        Debug.Log(player);
         if(player != null)
         {
             player.canFly = true;

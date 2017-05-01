@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Coin : MonoBehaviour {
 
-	void OnCollisionEnter2D(Collision2D coll)
+    private void OnTriggerExit2D(Collider2D coll)
     {
         var player = coll.gameObject.GetComponent<Player>();
         if (player != null)
