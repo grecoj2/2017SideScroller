@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bomb : Throwable 
+public class StunGrenade : Throwable 
 {
 
     public float blastRadius = 5;
@@ -26,13 +26,48 @@ public class Bomb : Throwable
         {
             if (Vector3.Distance(this.transform.position, e.transform.position) < blastRadius)
             {
-                e.gameObject.SetActive(false);
+               StartCoroutine( Stun(e) );
             }
         }
 
         // set myself (aka the bomb) to NOT-Active. That way the bomb disappears, and cannot be picked up again. 
-        gameObject.SetActive(false);
+        collider2D.enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
 
+    }
+
+    IEnumerator Stun(Enemy e)
+    {
+        var renderer = e.GetComponent<SpriteRenderer>(); 
+        var animator = GetComponent<SpriteRenderer>();
+
+        e.enabled = false;
+        if(animator != null)
+        {
+            animator.enabled = false;
+
+        }
+        for (int i = 0; i < 8; i++)
+        {
+            renderer.color = new Color(1, 1, 1, 1 - (i * .1f));
+            yield return new WaitForSeconds(.5f);
+        }
+       
+        yield return new WaitForSeconds(5);
+
+        for (int i = 0; i < 8; i++)
+        {
+            renderer.color = new Color(1, 1, 1, 1 - (i * .1f));
+            yield return new WaitForSeconds(.1f);
+        }
+
+        if (animator != null)
+        {
+            animator.enabled = true;
+
+        }
+      
+        e.enabled = true;
     }
 
  }
