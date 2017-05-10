@@ -29,8 +29,9 @@ public virtual void Attack()
         rigidbody2D.isKinematic = true;
         rigidbody2D.velocity = new Vector2();
         transform.parent = player.transform;
+        //below is scale to change for bomb to stop getting so big
         transform.localScale = new Vector3(.2f, .2f);
         transform.localPosition = new Vector3(.2f, .2f);
-
+        player.AddWeapon(this);
     }
 }

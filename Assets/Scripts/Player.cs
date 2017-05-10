@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public bool canFly = false;
 
     public Weapon currentWeapon;
+    private List<Weapon> weapons = new List<Weapon>();
 
     new Rigidbody2D rigidbody;
     GM _GM;
@@ -82,6 +83,13 @@ public class Player : MonoBehaviour {
         {
             currentWeapon.Attack();
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            int i = (weapons.IndexOf(currentWeapon) + 1) % weapons.Count;
+            SetCurrentWeapon(weapons[i]);
+        }
+       
         //check for out
         if (transform.position.y < deadZone)
         {
@@ -106,6 +114,26 @@ public class Player : MonoBehaviour {
         anim.SetTrigger("powered");
     }
 
+    public void AddWeapon(Weapon w)
+    {
+        weapons.Add(w);
+        SetCurrentWeapon(w);
+    }
+
+    public void SetCurrentWeapon(Weapon w)
+    {
+        if(currentWeapon != null)
+        {
+            currentWeapon.gameObject.SetActive(false);
+        }
+        currentWeapon = w;
+
+        if (currentWeapon != null)
+        {
+            currentWeapon.gameObject.SetActive(true);
+        }
+
+    }
     void OnCollisionEnter2D(Collision2D coll)
     {
         Air = false;
@@ -113,12 +141,21 @@ public class Player : MonoBehaviour {
         if (weapon != null )
         {
             weapon.GetPickedUp(this);
-            currentWeapon = weapon;
+          
         }
+            if (coll.transform.tag == "MovingPlatform")
+            {
+                transform.parent = coll.transform;
+            }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnCollisionExit2D(Collision2D coll)
     {
         Air = true;
+
+        if (coll.transform.tag == "MovingPlatform")
+        {
+            transform.parent = coll.transform;
+        }
     }
 }
