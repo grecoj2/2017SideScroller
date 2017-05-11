@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hammer : Weapon {
+public class Hammer : Weapon
+{
 
- 
-        public bool isActive = false;
+    public float killRadius = 1;
+    public bool isActive = false;
 
 
-        public override void Attack()
+
+    public override void Attack()
+    {
+
+        //collider2D.enabled = true;
+        Kill();
+        GetComponent<Animator>().SetTrigger("attack");
+
+      
+    }   
+
+    public void Kill()
+    {
+        var enemies = FindObjectsOfType<Enemy>();
+        foreach (var e in enemies)
         {
-
-            collider2D.enabled = true;
-            rigidbody2D.isKinematic = false;
-            rigidbody2D.velocity = new Vector2(0, 0);
-            transform.parent = null;
-
-        }
-
-        public override void GetPickedUp(Player player)
-        {
-            Debug.Log("Picking up Hammer");
-            if (isActive)
+            if (Vector3.Distance(this.transform.position, e.transform.position) < killRadius)
             {
-                return;
+                e.gameObject.SetActive(false);
             }
-            isActive = true;
-            base.GetPickedUp(player);
         }
     }
+}

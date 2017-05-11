@@ -143,17 +143,21 @@ public class Player : MonoBehaviour {
             weapon.GetPickedUp(this);
           
         }
-            if (coll.transform.tag == "MovingPlatform")
-            {
-                transform.parent = coll.transform;
-            }
+            
     }
 
     void OnCollisionExit2D(Collision2D coll)
     {
         Air = true;
 
-        if (coll.transform.tag == "MovingPlatform")
+        if (coll.transform.tag == "Moving Platform")
+        {
+            transform.parent = null;
+        }
+    }
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.transform.tag == "Moving Platform")
         {
             transform.parent = coll.transform;
         }
