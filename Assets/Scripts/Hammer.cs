@@ -21,7 +21,7 @@ public class Hammer : Weapon
 
     public void Kill()
     {
-        var enemies = FindObjectsOfType<Enemy>();
+        var enemies = FindObjectsOfType<Enemy>();     
         foreach (var e in enemies)
         {
             if (Vector3.Distance(this.transform.position, e.transform.position) < killRadius)
